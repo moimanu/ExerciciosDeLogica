@@ -1,16 +1,14 @@
-nSalas = int((input()))
-ldl = []
-for n in range(nSalas):
-    ldl.append(list(map(int, input().split())))
+m = []
+for n in range(int((input()))):
+    m.append(list(map(int, input().split())))
 
 contador = 0
-for x in range(len(ldl)):
-    ehOMenor = True
-    for y in range(len(ldl)):
-        if x!=y:
-            if ldl[x][0]<ldl[y][0] and ldl[x][1]>ldl[y][1] and ldl[x][2]>ldl[y][2] and ldl[x][3]<ldl[y][3]:
-                ehOMenor = False
-                break
-    if ehOMenor:
-        contador = contador + 1
-print(contador)
+for x in range(len(m)):
+    for y in range(len(m)):
+            if m[x][0]<m[y][0]:
+                if m[x][1]>m[y][1]:
+                    if m[x][2]>m[y][2]:
+                        if m[x][3]<m[y][3]:
+                            contador = contador + 1
+                            break
+print(len(m)-contador)
