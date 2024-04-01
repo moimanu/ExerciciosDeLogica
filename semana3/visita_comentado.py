@@ -60,3 +60,10 @@ tamanho_caminho = 0
 for n in range(1, len(seq_city)):
     tamanho_caminho = tamanho_caminho + grafo[seq_city[n-1]] [seq_city[n]]
 print(tamanho_caminho)
+
+#RESUMO
+#Passo 1) Receber a primeira entrada e definir N, A e B
+#Passo 2) Receber todas as outras entradas e definir P, Q e D (bem como Q, P e D) em uma matriz
+#Passo 3) Criar um grafo, com um dicionário, a partir da matriz anterior
+#Passo 4) Encontrar o caminho de A até B e armazená-lo
+#Passo 5) Realizar o somatório das arestas do caminho armazenado
