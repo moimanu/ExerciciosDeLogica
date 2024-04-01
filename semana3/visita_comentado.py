@@ -36,11 +36,11 @@ grafo [maior_vertice] = {} # <= Declarando o fim do grafo
 v_validos = []
 seq_city = []
 def procurar_caminho (cityA):
-    v_validos.append(cityA) # <= Adiciona o vertice aos v. processados
+    v_validos.append(cityA) # <= Adiciona o vertice aos v. válidos
 
     for n in grafo[cityA].keys():  #| <= Pra cada vértice destino do vértice de partida:
         if n == cityB:             #| <= Se encontrar a cidade destino
-            v_validos.append(n)    #| <= Armazenar cidade destino aos v. processados
+            v_validos.append(n)    #| <= Armazenar cidade destino aos v. válidos
             for n in v_validos:    #| <= Armazenar as cidades processadas na "sequencia final de cidades"
                 seq_city.append(n) #|
             break                  #| <= Termina
@@ -50,7 +50,7 @@ def procurar_caminho (cityA):
         procurar_caminho(n) # <= Se não encontrou o fim, volta à função (recursão)
 
         if n != cityB:      #| <= Se o caminho não levar à nada:
-            v_validos.pop() #| <= Tira o vértice dos processados e passa para o próximo
+            v_validos.pop() #| <= Tira o vértice dos válidos e passa para o próximo
 
 procurar_caminho(cityA) # <= Chama a função
 
