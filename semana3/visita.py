@@ -25,14 +25,14 @@ for n in matriz:
     grafo [n[0]] [n[1]] = n[2]
 grafo [maior_vertice] = {}
 
-processado = []
+v_validos = []
 seq_city = []
 def procurar_caminho (cityA):
-    processado.append(cityA) 
+    v_validos.append(cityA) 
     for n in grafo[cityA].keys():  
         if n == cityB:           
-            processado.append(n)
-            for n in processado:
+            v_validos.append(n)
+            for n in v_validos:
                 seq_city.append(n) 
             break
 
@@ -41,7 +41,7 @@ def procurar_caminho (cityA):
         procurar_caminho(n) 
 
         if n != cityB:     
-            processado.pop()
+            v_validos.pop()
 
 procurar_caminho(cityA)
 
