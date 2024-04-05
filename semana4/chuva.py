@@ -1,26 +1,31 @@
-qntdColunas = 6
-qntdLinhas = 5
-matriz = []
-for n in range(5):
+entrada1 = list(map(int, input().split())) # <= Definindo a primeira entrada
+linhas = entrada1[0]
+colunas = entrada1[1]
+
+matriz = [] 
+for n in range(linhas): # <= Definindo a segunda entrada
     matriz.append(list(input()))
 
+def bloco_abaixo(): # <= Função para conferir se há bloco abaixo da gota
+    for i in range(1, linhas):
+        for j in range(colunas):
+            if matriz[i-1][j] == "o" and matriz[i][j] == ".":
+                matriz[i][j] = "o"
+                gota_acima()
 
-def bloco_abaixo():
-    for linha in range(1, len(matriz)):
-        for coluna in range(qntdColunas):
-            if matriz [linha-1] [coluna] == "o" and matriz [linha] [coluna] == ".":
-                matriz [linha] [coluna] = "o"
-                bloco_acima()
-
-def bloco_acima():
-    for linha in range(1, len(matriz)):
-        for coluna in range(qntdColunas):
-            if matriz [linha-1] [coluna] == "o" and matriz [linha] [coluna] == "#":
-                if coluna != 0 or coluna != len(qntdColunas):
-                    matriz [linha-1] [coluna-1] = "o"
-                    matriz [linha-1] [coluna+1] = "o"
+def gota_acima(): # <= Função para conferir gota em cima de um bloco
+    for i in range(1, linhas):
+        for j in range(colunas):
+            if matriz[i-1][j] == "o" and matriz[i][j] == "#":
+                if j != 0 or j != len(colunas):
+                    if matriz[i-1][j-1] != "#":
+                        matriz[i-1][j-1] = "o"
+                    if matriz[i-1][j+1] != "#":
+                        matriz[i-1][j+1] = "o"
                     bloco_abaixo()
 
+gota_acima()
 bloco_abaixo()
-for linha in matriz:
-    print(linha)
+
+for linha in matriz: # <= Definindo a saída
+    print(''.join(linha))
