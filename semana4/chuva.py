@@ -3,8 +3,7 @@ linhas = entrada1[0]
 colunas = entrada1[1]
 
 matriz = [] 
-for n in range(linhas): # <= Definindo a segunda entrada
-    matriz.append(list(input()))
+for n in range(linhas): matriz.append(list(input())) # <= Definindo a segunda entrada
 
 def gota_acima(): # <= Função para conferir gota em cima de um bloco
     if matriz[i-1][j] == "o" and matriz[i][j] == "#":
@@ -21,5 +20,4 @@ for coluna in range(colunas): # <= Conferindo as linhas "n" vezes, em que "n" re
             gota_acima()
             bloco_abaixo()
 
-for linha in matriz: # <= Definindo a saída
-    print(''.join(linha))
+for linha in matriz: print(''.join(linha)) # <= Definindo a saída
