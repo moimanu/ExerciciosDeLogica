@@ -15,17 +15,17 @@ for n in listaDaSeq:
             copas = 'erro'
         elif copas != 'erro':
             copas.append(n)
-    if n[2] == 'E':
+    elif n[2] == 'E':
         if n in espadas:
             espadas = 'erro'
         elif espadas != 'erro':
             espadas.append(n)
-    if n[2] == 'U':
+    elif n[2] == 'U':
         if n in ouros:
             ouros = 'erro'
         elif ouros != 'erro':
             ouros.append(n)
-    if n[2] == 'P':
+    elif n[2] == 'P':
         if n in paus:
             paus = 'erro'
         elif paus != 'erro':
