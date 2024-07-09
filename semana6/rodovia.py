@@ -1,14 +1,14 @@
 entrada1 = int(input()) # <= Primeira entrada (quantidade de cidades)
 
-matriz=[]
+lista=[]
 for n in range(entrada1):
-    matriz.append(list(map(int, input().split()))) # <= Matriz com os pontos A e B
+    lista.append(list(map(int, input().split()))) # <= lista com os pontos A e B
 
 grafo = {}
-for n in matriz: 
+for n in lista: 
     grafo [n[0]] = n[1] # <= Relação entre os pontos A e B
 
-cidadeAtual = matriz[0][0]
+cidadeAtual = lista[0][0]
 conferenciaAtiva = True
 
 while conferenciaAtiva: # <= Laço para conferir se existe um caminho que liga todos os pontos
