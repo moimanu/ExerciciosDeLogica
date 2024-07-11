@@ -1,3 +1,4 @@
+# ENTRADAS:
 entrada1 = list(map(int, input().split())) # <= Primeira entrada (E, I, V)
 
 lista=[]
@@ -8,6 +9,15 @@ ultimaEntrada = list(map(int, input().split())) # <= Última entrada (Xi)
 
 print("LISTA: ", lista)
 
+# GUARDANDO TODOS OS EVENTOS EM UM VETOR
+caminho = []
+for n in lista:
+    for i in n:
+        if i not in caminho:
+            caminho.append(i)
+caminho.sort()
+
+# TRANSFORMANDO A LISTA EM UM GRAFO
 grafo = {}
 for n in lista:
     grafo[n[1]] = []
@@ -16,28 +26,47 @@ for n in lista:
     
 print("GRAFO: ", grafo)
 
-listaConexoesDiretas = []
-def conferirConexaoDireta(vertice):
+# CONFERINDO AS PRIMEIRAS CONEXÕES UNICAS
+listaConexoesUnicas = []
+def conferirConexaoUnica(vertice):
     if (grafo.get(vertice, False)):
-        ultimaEntrada[0] = grafo[vertice]
-        listaConexoesDiretas.append(grafo[vertice])
-        conferirConexaoDireta(grafo[vertice])
-print("Conexões diretas: ", listaConexoesDiretas)
+        if (len(grafo[vertice]) == 1):
+            listaConexoesUnicas.append(vertice)
+            conferirConexaoUnica(grafo[vertice][0])
+            ultimaEntrada[0] = listaConexoesUnicas[len(listaConexoesUnicas) - 1]
 
-conferirConexaoDireta(ultimaEntrada[0])
+conferirConexaoUnica(ultimaEntrada[0])
 
-listaDeUltimosVertices = []
-def printarGrafo(vertice):
-    if (grafo.get(vertice, False)):
-        for n in grafo[vertice]:
-            print(n)
-            printarGrafo(n)
+print("CONEXÕES ÚNICAS: ", listaConexoesUnicas)
+print("ÚLTIMA CONEXÃO ÚNICA: ", ultimaEntrada[0])
+print("EVENTO CONFIRMADO: ", ultimaEntrada)
+
+# CONFERINDO A PRIMEIRA CAUSA DE TODOS OS EVENTOS
+listaDePrimeirasCausas = []
+def encontrarPrimeiraCausa(evento):
+    if (grafo.get(evento, False)):
+        for n in grafo[evento]:
+            encontrarPrimeiraCausa(n)
     else: 
-        print("O último vértice foi: ", vertice)
-        listaDeUltimosVertices.append(vertice)
+        print("A causa primeira encontrada foi: ", evento)
+        listaDePrimeirasCausas.append(evento)
         
-printarGrafo(ultimaEntrada[0])
+encontrarPrimeiraCausa(ultimaEntrada[0])
 
-print("FILHOS DO PRIMEIRO VÉRTICE: ", grafo[ultimaEntrada[0]])
-print("LISTA DE ÚLTIMOS VÉRTICES: ",listaDeUltimosVertices)
-print("ÚLTIMA ENTRADA: ", ultimaEntrada)
+print("LISTA DE PRIMEIRAS CAUSAS: ",listaDePrimeirasCausas)
+
+# CONFERINDO SE HÁ ALGUMA BIFURCAÇÃO
+bifurcacao = False
+for n in listaDePrimeirasCausas:
+    if n != listaDePrimeirasCausas[0]:
+        bifurcacao = True
+        break
+
+# CONFIGURANDO A SAÍDA
+if bifurcacao:
+    if(len(listaConexoesUnicas) < 1):
+        print(ultimaEntrada)
+    else:
+        print(listaConexoesUnicas)
+else:
+    print(caminho)
