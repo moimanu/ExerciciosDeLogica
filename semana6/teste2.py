@@ -7,7 +7,7 @@ for n in range(entrada1[1]):
 
 ultimaEntrada = list(map(int, input().split())) # <= Última entrada (Xi)
 
-print("LISTA DE PARES DE EVENTOS: ", listaParesEventos)
+print("\nLISTA DE PARES DE EVENTOS:\n", listaParesEventos,"\n")
 
 # GUARDANDO TODOS OS EVENTOS EM UMA LISTA E OS ORDENANDO
 eventos = []
@@ -24,7 +24,7 @@ for n in listaParesEventos:
 for n in listaParesEventos:
     grafo[n[1]].append(n[0])
     
-print("GRAFO: ", grafo)
+print("GRAFO:\n", grafo,"\n")
 
 # CONFERINDO AS PRIMEIRAS CONEXÕES ÚNICAS A PARTIR DO EVENTO CONFIRMADO
 listaConexoesUnicas = []
@@ -33,13 +33,13 @@ def conferirConexaoUnica(evento):
         if (len(grafo[evento]) == 1):
             listaConexoesUnicas.append(evento)
             conferirConexaoUnica(grafo[evento][0])
-            ultimaEntrada[n] = listaConexoesUnicas[len(listaConexoesUnicas) - 1]
+            ultimaEntrada[n] = grafo[evento][0]
 
 for n in range(len(ultimaEntrada)):
     conferirConexaoUnica(ultimaEntrada[n]) # <= Atualizando o evento verdadeiro para a próxima conexão única
 
-print("EVENTOS COM CONEXÕES ÚNICAS (a partir do primeiro verdadeiro): ", listaConexoesUnicas)
-print("ÚLTIMOS EVENTOS INICIAIS CONFIRMADOS: ", ultimaEntrada)
+print("EVENTOS COM CONEXÕES ÚNICAS (a partir do primeiro verdadeiro):\n", listaConexoesUnicas,"\n")
+print("ÚLTIMOS EVENTOS INICIAIS CONFIRMADOS:\n", ultimaEntrada,"\n")
 
 # CONFERINDO A PRIMEIRA CAUSA A PARTIR DE UM EVENTO VERDADEIRO
 listaDePrimeirasCausas = []
@@ -54,7 +54,7 @@ saida = []
 
 for n in range(len(ultimaEntrada)):
     encontrarPrimeiraCausa(ultimaEntrada[n])
-    print("LISTA DE PRIMEIRAS CAUSAS: ",listaDePrimeirasCausas)
+    print("LISTA DE PRIMEIRAS CAUSAS:\n",listaDePrimeirasCausas,"\n")
 
     # CONFERINDO SE HÁ ALGUMA BIFURCAÇÃO
     bifurcacao = False
@@ -72,4 +72,4 @@ for n in range(len(ultimaEntrada)):
             saida.append(e)
         break
 
-print("SAÍDA: ", saida)
+print("SAÍDA:\n", " ".join(map(str, saida)),"\n")
