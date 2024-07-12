@@ -17,7 +17,7 @@ for n in listaParesEventos:
             eventos.append(i)
 eventos.sort()
 
-# TRANSFORMANDO A LISTA DE PARES EM UM GRAFO (dicionário)
+# TRANSFORMANDO A LISTA DE PARES EM UM GRAFO DE CONSEQUENCIA -> CAUSA (dicionário)
 grafo = {}
 for n in listaParesEventos:
     grafo[n[1]] = []
@@ -25,6 +25,15 @@ for n in listaParesEventos:
     grafo[n[1]].append(n[0])
     
 print("GRAFO:\n", grafo,"\n")
+
+# TRANSFORMANDO A LISTA DE PARES EM UM GRAFO DE CAUSA -> CONSEQUÊNCIA (dicionário)
+grafoInverso = {}
+for n in listaParesEventos:
+    grafoInverso[n[0]] = []
+for n in listaParesEventos:
+    grafoInverso[n[0]].append(n[1])
+    
+print("GRAFO INVERSO:\n", grafoInverso,"\n")
 
 # CONFERINDO AS PRIMEIRAS CONEXÕES ÚNICAS A PARTIR DO EVENTO CONFIRMADO
 listaConexoesUnicas = []
@@ -34,8 +43,8 @@ def conferirConexaoUnica(evento):
             if evento not in listaConexoesUnicas:
                 listaConexoesUnicas.append(evento)
             listaConexoesUnicas.append(grafo[evento][0])
-            conferirConexaoUnica(grafo[evento][0])
             ultimaEntrada[n] = grafo[evento][0]
+            conferirConexaoUnica(grafo[evento][0])
 
 for n in range(len(ultimaEntrada)):
     conferirConexaoUnica(ultimaEntrada[n]) # <= Atualizando o evento verdadeiro para a próxima conexão única
@@ -50,13 +59,22 @@ def encontrarPrimeiraCausa(evento):
         for n in grafo[evento]:
             encontrarPrimeiraCausa(n)
     else: 
-        listaDePrimeirasCausas.append(evento)
+        if evento not in listaDePrimeirasCausas:
+            listaDePrimeirasCausas.append(evento)
+
+# GUARDANDO TODAS AS CONSEQUÊNCIAS A PARTIR DE UMA CAUSA VERDADEIRA
+def encontrarConsequências(evento):
+    if (grafoInverso.get(evento, False)):
+        for n in grafoInverso[evento]:
+            if n not in saida:
+                saida.append(n)
+                encontrarConsequências(n)
 
 saida = []
-
 for n in range(len(ultimaEntrada)):
+    listaDePrimeirasCausas = []
     encontrarPrimeiraCausa(ultimaEntrada[n])
-    print("LISTA DE PRIMEIRAS CAUSAS:\n",listaDePrimeirasCausas,"\n")
+    print("LISTA DE PRIMEIRAS CAUSAS DO EVENTO ", ultimaEntrada[n], ":\n",listaDePrimeirasCausas,"\n")
 
     # CONFERINDO SE HÁ ALGUMA BIFURCAÇÃO
     bifurcacao = False
@@ -74,8 +92,9 @@ for n in range(len(ultimaEntrada)):
                 if c not in saida:
                     saida.append(c)
     else:
-        for e in eventos:
-            saida.append(e)
+        for o in listaDePrimeirasCausas:
+            saida.append(o)
+            encontrarConsequências(o)
         break
 
 saida.sort()
