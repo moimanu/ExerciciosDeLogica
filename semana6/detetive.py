@@ -13,8 +13,9 @@ def guardarCausaUnica(listaParaGuardar, grafo, lista2):
     for item in lista2:
         if(grafo.get(item, False)):
             if(len(grafo[item]) == 1):
-                if item not in listaParaGuardar:
+                if grafo[item][0] not in listaParaGuardar:
                     listaParaGuardar.append(grafo[item][0])
+            guardarCausaUnica(listaParaGuardar, grafo, grafo[item])
 
 def conferirBifurcacao(evento, grafo):
     if (grafo.get(evento, False)):
