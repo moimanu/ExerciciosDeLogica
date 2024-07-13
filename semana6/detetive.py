@@ -73,7 +73,7 @@ eventosVerdadeiros = list(set(xi + causasUnicas + consequenciasVerdadeiras + cau
 print(" ".join(map(str, eventosVerdadeiros)))
 
 # PRINTS:
-# print("CAUSA PRIMÁRIA:", causaPrimaria)
+# print("\nCAUSA PRIMÁRIA:\n", causaPrimaria)
 # print("\nLISTA DE PARES DE EVENTOS:\n", listaParesEventos,"\n")
 # print("\nGRAFO CAUSA -> CONSEQUENCIA:\n", grafoCausaConsequencia,"\n")
 # print("\nGRAFO CONSEQUENCIA -> CAUSA:\n", grafoConsequenciaCausa,"\n")
