@@ -65,7 +65,7 @@ grafoConsequenciaCausa = {}
 criarGrafo(listaParesEventos, grafoConsequenciaCausa, 1, 0)
 
 
-# ENCONTRANDO AS CAUSAS QUE POSSUEM APENAS UMA CONSEQUÊNCIA:
+# ENCONTRANDO AS CAUSAS QUE POSSUEM APENAS UMA CONSEQUÊNCIA (a partir de uma consequência verdadeira):
 causasUnicas = []
 guardarCausaUnica(causasUnicas, grafoConsequenciaCausa, xi)
 
