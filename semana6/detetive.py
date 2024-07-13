@@ -14,8 +14,8 @@ def criarGrafo(lista, grafo, chave, valor):
     for par in lista:
         grafo[par[chave]].append(par[valor])
 
-def guardarCausaUnica(listaParaGuardar, grafo, lista2):
-    for item in lista2:
+def guardarCausaUnica(listaParaGuardar, grafo, listaXi):
+    for item in listaXi:
         if(grafo.get(item, False)):
             if(len(grafo[item]) == 1):
                 if grafo[item][0] not in listaParaGuardar:
