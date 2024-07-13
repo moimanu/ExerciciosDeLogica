@@ -1,102 +1,95 @@
-# ENTRADAS:
-entrada1 = list(map(int, input().split())) # <= Primeira entrada (E, I, V)
+# FUNÇÕES:
+def receberEntradasConsecutivas(qntdEntradas, lista):
+    for entrada in range(qntdEntradas):
+        lista.append(list(map(int, input().split())))
 
-listaParesEventos = []
-for n in range(entrada1[1]):
-    listaParesEventos.append(list(map(int, input().split()))) # <= lista com os pontos A e B
+def agruparEventosEmVetor(matriz, vetor):
+    for i in matriz:
+        for j in i:
+            if j not in vetor:
+                vetor.append(j)
 
-ultimaEntrada = list(map(int, input().split())) # <= Última entrada (Xi)
+def criarGrafo(lista, grafo, chave, valor):
+    for par in lista:
+        grafo[par[chave]] = []
+    for par in lista:
+        grafo[par[chave]].append(par[valor])
 
-print("\nLISTA DE PARES DE EVENTOS:\n", listaParesEventos,"\n")
+def guardarCausaUnica(listaParaGuardar, grafo, lista2):
+    for item in lista2:
+        if(grafo.get(item, False)):
+            if(len(grafo[item]) == 1):
+                if item not in listaParaGuardar:
+                    listaParaGuardar.append(grafo[item][0])
 
-# GUARDANDO TODOS OS EVENTOS EM UMA LISTA E OS ORDENANDO
-eventos = []
-for n in listaParesEventos:
-    for i in n:
-        if i not in eventos:
-            eventos.append(i)
-eventos.sort()
-
-# TRANSFORMANDO A LISTA DE PARES EM UM GRAFO DE CONSEQUENCIA -> CAUSA (dicionário)
-grafo = {}
-for n in listaParesEventos:
-    grafo[n[1]] = []
-for n in listaParesEventos:
-    grafo[n[1]].append(n[0])
-    
-print("GRAFO:\n", grafo,"\n")
-
-# TRANSFORMANDO A LISTA DE PARES EM UM GRAFO DE CAUSA -> CONSEQUÊNCIA (dicionário)
-grafoInverso = {}
-for n in listaParesEventos:
-    grafoInverso[n[0]] = []
-for n in listaParesEventos:
-    grafoInverso[n[0]].append(n[1])
-    
-print("GRAFO INVERSO:\n", grafoInverso,"\n")
-
-# CONFERINDO AS PRIMEIRAS CONEXÕES ÚNICAS A PARTIR DO EVENTO CONFIRMADO
-listaConexoesUnicas = []
-def conferirConexaoUnica(evento):
+def conferirBifurcacao(evento, grafo):
     if (grafo.get(evento, False)):
-        if (len(grafo[evento]) == 1):
-            if evento not in listaConexoesUnicas:
-                listaConexoesUnicas.append(evento)
-            listaConexoesUnicas.append(grafo[evento][0])
-            ultimaEntrada[n] = grafo[evento][0]
-            conferirConexaoUnica(grafo[evento][0])
-
-for n in range(len(ultimaEntrada)):
-    conferirConexaoUnica(ultimaEntrada[n]) # <= Atualizando o evento verdadeiro para a próxima conexão única
-
-print("EVENTOS COM CONEXÕES ÚNICAS (a partir do primeiro verdadeiro):\n", listaConexoesUnicas,"\n")
-print("ÚLTIMOS EVENTOS INICIAIS CONFIRMADOS:\n", ultimaEntrada,"\n")
-
-# CONFERINDO A PRIMEIRA CAUSA A PARTIR DE UM EVENTO VERDADEIRO
-listaDePrimeirasCausas = []
-def encontrarPrimeiraCausa(evento):
-    if (grafo.get(evento, False)):
-        for n in grafo[evento]:
-            encontrarPrimeiraCausa(n)
+        for causa in grafo[evento]:
+            conferirBifurcacao(causa, grafo)
     else: 
         if evento not in listaDePrimeirasCausas:
             listaDePrimeirasCausas.append(evento)
 
-# GUARDANDO TODAS AS CONSEQUÊNCIAS A PARTIR DE UMA CAUSA VERDADEIRA
-def encontrarConsequências(evento):
-    if (grafoInverso.get(evento, False)):
-        for n in grafoInverso[evento]:
-            if n not in saida:
-                saida.append(n)
-                encontrarConsequências(n)
-
-saida = []
-for n in range(len(ultimaEntrada)):
-    listaDePrimeirasCausas = []
-    encontrarPrimeiraCausa(ultimaEntrada[n])
-    print("LISTA DE PRIMEIRAS CAUSAS DO EVENTO ", ultimaEntrada[n], ":\n",listaDePrimeirasCausas,"\n")
-
-    # CONFERINDO SE HÁ ALGUMA BIFURCAÇÃO
-    bifurcacao = False
-    for i in listaDePrimeirasCausas:
-        if i != listaDePrimeirasCausas[0]:
-            bifurcacao = True
-            break
-    
-    # CONFIGURANDO A SAÍDA
-    if bifurcacao:
-        if(len(listaConexoesUnicas) < 1):
-            saida.append(ultimaEntrada[n])
-        else:
-            for c in listaConexoesUnicas:
-                if c not in saida:
-                    saida.append(c)
+    if len(listaDePrimeirasCausas) > len(set(listaDePrimeirasCausas)):
+        bifurcacao = True
     else:
-        for o in listaDePrimeirasCausas:
-            saida.append(o)
-            encontrarConsequências(o)
-        break
+        bifurcacao = False
+    
+    return bifurcacao
 
-saida.sort()
+def encontrarConsequências(evento, grafo, lista):
+    if (grafo.get(evento, False)):
+        for conseq in grafo[evento]:
+            if conseq not in lista:
+                lista.append(conseq)
+                encontrarConsequências(conseq , grafo, lista)
 
-print("SAÍDA:\n", " ".join(map(str, saida)),"\n")
+
+# VARIAVEIS E VETORES:
+eiv = list(map(int, input().split()))
+
+listaParesEventos = []
+receberEntradasConsecutivas(eiv[1], listaParesEventos) 
+
+xi = list(map(int, input().split()))
+
+eventos = []
+agruparEventosEmVetor(listaParesEventos, eventos)
+
+
+# GRAFOS:
+grafoCausaConsequencia = {}
+criarGrafo(listaParesEventos, grafoCausaConsequencia, 0, 1)
+
+grafoConsequenciaCausa = {}
+criarGrafo(listaParesEventos, grafoConsequenciaCausa, 1, 0)
+
+
+# ENCONTRANDO AS CAUSAS QUE POSSUEM APENAS UMA CONSEQUÊNCIA:
+causasUnicas = []
+guardarCausaUnica(causasUnicas, grafoConsequenciaCausa, xi)
+
+
+# ENCONTRANDO O CAMINHO DE EVENTOS VERDADEIROS:
+causaPrimaria = []
+consequenciasVerdadeiras = []
+for x in xi:
+    listaDePrimeirasCausas = []
+    if not(conferirBifurcacao(x, grafoConsequenciaCausa)):
+        if len(listaDePrimeirasCausas) == 1:
+            causaPrimaria.append(listaDePrimeirasCausas[0])
+        encontrarConsequências(listaDePrimeirasCausas[0], grafoCausaConsequencia, consequenciasVerdadeiras)
+
+
+# SAÍDA:
+eventosVerdadeiros = list(set(xi + causasUnicas + consequenciasVerdadeiras + causaPrimaria))
+print(" ".join(map(str, eventosVerdadeiros)))
+
+# PRINTS:
+# print("CAUSA PRIMÁRIA:", causaPrimaria)
+# print("\nLISTA DE PARES DE EVENTOS:\n", listaParesEventos,"\n")
+# print("\nLISTA DE EVENTOS:\n", eventos,"\n")
+# print("\nGRAFO CAUSA -> CONSEQUENCIA:\n", grafoCausaConsequencia,"\n")
+# print("\nGRAFO CONSEQUENCIA -> CAUSA:\n", grafoConsequenciaCausa,"\n")
+# print("\nCAUSAS DE CONSEQUÊNCIAS ÚNICAS:\n", causasUnicas,"\n")
+# print("\nEVENTOS VERDADEIROS:\n", eventosVerdadeiros,"\n")
