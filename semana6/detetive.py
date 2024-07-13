@@ -1,7 +1,12 @@
 # FUNÇÕES:
-def receberEntradasConsecutivas(qntdEntradas, lista):
+def receberEntrada():
+    return(list(map(int, input().split())))
+
+def receberEntradasConsecutivas(qntdEntradas):
+    listaTemp = []
     for entrada in range(qntdEntradas):
-        lista.append(list(map(int, input().split())))
+        listaTemp.append(list(map(int, input().split())))
+    return listaTemp
 
 def criarGrafo(lista, grafo, chave, valor):
     for par in lista:
@@ -39,13 +44,10 @@ def encontrarConsequências(evento, grafo, lista):
                 lista.append(conseq)
                 encontrarConsequências(conseq , grafo, lista)
 
-# VARIAVEIS E VETORES:
-eiv = list(map(int, input().split()))
-
-listaParesEventos = []
-receberEntradasConsecutivas(eiv[1], listaParesEventos) 
-
-xi = list(map(int, input().split()))
+# ENTRADAS:
+eiv = receberEntrada()
+listaParesEventos = receberEntradasConsecutivas(eiv[1]) 
+xi = receberEntrada()
 
 # GRAFOS:
 grafoCausaConsequencia = {}
