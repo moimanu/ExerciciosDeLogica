@@ -1,3 +1,5 @@
+# ESTOU REFAZENDO O CÓDIGO DO DETETIVE
+
 # FUNÇÕES:
 def receberEntradasConsecutivas(qntdEntradas, lista):
     for entrada in range(qntdEntradas):
