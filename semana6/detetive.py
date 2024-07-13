@@ -61,6 +61,7 @@ causasUnicas = []
 guardarCausaUnica(causasUnicas, grafoConsequenciaCausa, xi)
 
 # ENCONTRANDO O CAMINHO DE EVENTOS VERDADEIROS:
+# RESUMO: Encontrei uma causa primária válida e depois validei todas as suas respectivas consequências...
 causaPrimaria = []
 consequenciasVerdadeiras = []
 for x in xi:
