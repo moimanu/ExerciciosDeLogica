@@ -74,8 +74,8 @@ print(" ".join(map(str, eventosVerdadeiros)))
 
 # PRINTS:
 # print("\nCAUSA PRIMÁRIA:\n", causaPrimaria)
-# print("\nLISTA DE PARES DE EVENTOS:\n", listaParesEventos,"\n")
-# print("\nGRAFO CAUSA -> CONSEQUENCIA:\n", grafoCausaConsequencia,"\n")
-# print("\nGRAFO CONSEQUENCIA -> CAUSA:\n", grafoConsequenciaCausa,"\n")
-# print("\nCAUSAS DE CONSEQUÊNCIAS ÚNICAS:\n", causasUnicas,"\n")
-# print("\nEVENTOS VERDADEIROS:\n", eventosVerdadeiros,"\n")
+# print("\nLISTA DE PARES DE EVENTOS:\n", listaParesEventos)
+# print("\nGRAFO CAUSA -> CONSEQUENCIA:\n", grafoCausaConsequencia)
+# print("\nGRAFO CONSEQUENCIA -> CAUSA:\n", grafoConsequenciaCausa)
+# print("\nCAUSAS DE CONSEQUÊNCIAS ÚNICAS:\n", causasUnicas)
+# print("\nEVENTOS VERDADEIROS:\n", eventosVerdadeiros, "\n")
