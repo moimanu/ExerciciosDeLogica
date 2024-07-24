@@ -1,3 +1,5 @@
+# AINDA ESTOU TRABALHANDO NESSE EXERCÍCIO...
+
 # FUNÇÕES:
 def receberEntradasConsecutivas(qntdConexoes):
     temp = []
