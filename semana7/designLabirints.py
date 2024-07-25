@@ -1,5 +1,3 @@
-# AINDA ESTOU TRABALHANDO NESSE EXERCÍCIO...
-
 # FUNÇÕES:
 def receberEntradasConsecutivas(qntdConexoes):
     temp = []
@@ -7,39 +5,44 @@ def receberEntradasConsecutivas(qntdConexoes):
         temp.append(list(map(int, input().split())))
     return temp
 
-def conferirCaminho(verticeA):
+def preencherGrafo(grafo, arestas):
+    for a in arestas:
+        grafo[a[0]] = []
+        grafo[a[1]] = []
+    for a in arestas:
+        if a[1] not in grafo[a[0]]:
+            grafo[a[0]].append(a[1])
+        if a[0] not in grafo[a[1]]:
+            grafo[a[1]].append(a[0])
+
+def conferirCaminho(verticeA, grafo, contador):
     if verticeA in grafo:
         for verticeB in grafo[verticeA]:
             grafo[verticeB].remove(verticeA)
-            contadorPassos.append(verticeB)
-            conferirCaminho(verticeB)
+            contador.append(verticeB)
+            conferirCaminho(verticeB, grafo, contador)
+            
+def encontrarQntdPassos(listaParaGuardar):
+    # ENTRADAS:
+    verticeInicial = int(input())
+    qntdVerticesEArestas = list(map(int, input().split()))
+    arestasLabirinto = receberEntradasConsecutivas(qntdVerticesEArestas[1])
 
-# ENTRADAS:
+    # PROCESSO:
+    grafoLabirinto = {}
+    preencherGrafo(grafoLabirinto, arestasLabirinto)
+
+    contadorPassos = []
+    conferirCaminho(verticeInicial, grafoLabirinto, contadorPassos)
+
+    listaParaGuardar.append(len(contadorPassos)*2)
+
+# SAÍDA:
 testes = int(input())
-verticeInicial = int(input())
-qntdVerticesEArestas = list(map(int, input().split()))
-arestas = receberEntradasConsecutivas(qntdVerticesEArestas[1])
+qntdPassos = []
 
-# GRAFO:
-grafo = {}
-for a in arestas:
-    grafo[a[0]] = []
-    grafo[a[1]] = []
-for a in arestas:
-    if a[1] not in grafo[a[0]]:
-        grafo[a[0]].append(a[1])
-    if a[0] not in grafo[a[1]]:
-        grafo[a[1]].append(a[0])
+for n in range(testes):
+    encontrarQntdPassos(qntdPassos)
 
-# print("\n")
-# print("TESTES:",testes,"\n")
-# print("VÉRTICE INICIAL:",verticeInicial,"\n")
-# print("QNTD V E A:",qntdVerticesEArestas,"\n")
-# print("ARESTAS:",arestas,"\n")
-# print("GRAFO:",grafo,"\n")
-
-contadorPassos = []
-conferirCaminho(verticeInicial)
-
-# print("CONTADOR DE PASSOS:",contadorPassos,"\n")
-print(len(contadorPassos)*2)
+for n in qntdPassos:
+    print(n)
