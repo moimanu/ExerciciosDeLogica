@@ -43,7 +43,3 @@ conferirCaminho(verticeInicial)
 
 # print("CONTADOR DE PASSOS:",contadorPassos,"\n")
 print(len(contadorPassos)*2)
-conferirCaminho(verticeInicial)
-
-print(contadorPassos)
-print(len(contadorPassos)*2)
