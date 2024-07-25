@@ -14,11 +14,12 @@ def algoritmo():
 
     for r in requisicoes:
         temp = []
-        for app in range(len(r)):
-            for s in servidores:
-                if r[app] in s:
-                    if r[app] not in temp:
-                        temp.append(r[app])
+        for s in servidores:
+            for indice in range(len(r)):
+                if(indice != 0):
+                    if r[indice] in s:
+                        temp.append(r[indice])
+                        break
         conexoes += len(temp)
     
     saida.append(conexoes)
