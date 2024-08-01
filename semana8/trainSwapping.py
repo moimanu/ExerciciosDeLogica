@@ -6,14 +6,13 @@ for teste in range(qntdTestes):
     vagoes = list(map(int, input().split()))
 
     passos = 0
-    menorVagao = 1
-    for vagao in vagoes:
-        for n in vagoes:
-            if(n == menorVagao and vagoes.index(n) != n-1):
-                passos += vagoes.index(n) - (n-1)
-                vagoes.remove(n)
-                vagoes.insert(n-1, n)
-        menorVagao += 1
+
+    for nVagao in range(comprimentoTrem):
+        if(vagoes.index(nVagao+1) != nVagao):
+            passos += vagoes.index(nVagao+1) - (nVagao)
+            vagoes.remove(nVagao+1)
+            vagoes.insert(nVagao, nVagao+1)
+    
     listaPassos.append(passos)
 
 for passo in listaPassos:
